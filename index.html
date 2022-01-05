@@ -54,6 +54,7 @@
           <ul class="nav navbar-nav navbar-right">
             <li><a href="#home" class="smoothScroll">Home</a></li>
             <li><a href="#about" class="smoothScroll">About Me</a></li>
+            <li><a href="#graphs" class="smoothScroll">Graphs</a></li>
             <li><a href="#projects" class="smoothScroll">Projects</a></li>
             <li><a href="#education" class="smoothScroll">Education</a></li>
           </ul>
@@ -198,13 +199,19 @@
               <h1>Graphs</h1>
             </div>
           </div>
-
-          <div class="clearfix"></div>
-          <div class="col-md-4 col-sm-4 item">
-            <h3>How I spend my day?</h3>
-            <canvas id="myChart"></canvas>
+        </div>
+        <div class="row">
+          <h2>The United States Travel Map</h2>
+          <div>
+            <canvas id="canvas"></canvas>
           </div>
         </div>
+        <br />
+        <div class="row">
+          <h2>Active Months Spent Using Languages</h2>
+          <canvas id="myChart"></canvas>
+        </div>
+        <div class="clearfix"></div>
       </div>
     </section>
 
@@ -665,29 +672,114 @@
     <!-- SCRIPTS -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-      const data = {
-        labels: ["Red", "Blue", "Yellow"],
-        datasets: [
-          {
-            label: "How I Spend My Day Doughnut Chart",
-            data: [8,],
-            backgroundColor: [
-              "rgb(255, 99, 132)",
-              "rgb(54, 162, 235)",
-              "rgb(255, 205, 86)",
+      var ctx = document.getElementById("myChart");
+      var myChart = new Chart(ctx, {
+        type: "bar",
+        data: {
+          labels: ["Python", "Java", "R", "JavaScript/TypeScript", "HTML/CSS"],
+          datasets: [
+            {
+              data: [24, 12, 6, 20, 10],
+              backgroundColor: [
+                "rgba(255, 99, 132, 0.2)",
+                "rgba(54, 162, 235, 0.2)",
+                "rgba(255, 206, 86, 0.2)",
+                "rgba(75, 192, 192, 0.2)",
+                "rgba(153, 102, 255, 0.2)",
+              ],
+              borderColor: [
+                "rgba(255,99,132,1)",
+                "rgba(54, 162, 235, 1)",
+                "rgba(255, 206, 86, 1)",
+                "rgba(75, 192, 192, 1)",
+                "rgba(153, 102, 255, 1)",
+              ],
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          scales: {
+            xAxes: [
+              {
+                ticks: {
+                  maxRotation: 90,
+                  minRotation: 80,
+                },
+                gridLines: {
+                  offsetGridLines: true, // à rajouter
+                },
+              },
+              {
+                position: "top",
+                ticks: {
+                  maxRotation: 90,
+                  minRotation: 80,
+                },
+                gridLines: {
+                  offsetGridLines: true, // et matcher pareil ici
+                },
+              },
             ],
-            hoverOffset: 4,
+            yAxes: [
+              {
+                ticks: {
+                  beginAtZero: true,
+                },
+              },
+            ],
           },
-        ],
-      };
-
-      const config = {
-        type: "doughnut",
-        data: data,
-      };
+        },
+      });
     </script>
+
+    <script src="https://unpkg.com/chartjs-chart-geo@3.6.0/build/index.umd.min.js"></script>
     <script>
-      const myChart = new Chart(document.getElementById("myChart"), config);
+      fetch("https://unpkg.com/us-atlas/states-10m.json")
+        .then((r) => r.json())
+        .then((us) => {
+          const nation = ChartGeo.topojson.feature(us, us.objects.nation)
+            .features[0];
+          const states = ChartGeo.topojson.feature(
+            us,
+            us.objects.states
+          ).features;
+
+          const arr = [
+            50, 0, 0, 100, 100, 100, 0, 100, 0, 0, 0, 100, 0, 0, 50, 50, 0, 100,
+            0, 0, 0, 0, 0, 100, 100, 100, 0, 100, 0, 0, 0, 100, 100, 50, 0, 0,
+            100, 100, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, 100,
+            0,
+          ];
+
+          const chart = new Chart(
+            document.getElementById("canvas").getContext("2d"),
+            {
+              type: "choropleth",
+              data: {
+                labels: states.map((d) => d.properties.name),
+                datasets: [
+                  {
+                    label: "States",
+                    outline: nation,
+                    data: states.map((d, index) => ({
+                      feature: d,
+                      value: arr[index],
+                    })),
+                  },
+                ],
+              },
+              options: {
+                plugins: {
+                  legend: {
+                    display: false,
+                  },
+                },
+              },
+            }
+          );
+        });
     </script>
     <script src="js/jquery.js"></script>
     <script src="js/bootstrap.min.js"></script>
