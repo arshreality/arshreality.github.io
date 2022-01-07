@@ -207,9 +207,16 @@
           </div>
         </div>
         <br />
+        <hr />
         <div class="row">
           <h2>Active Months Spent Using Languages</h2>
           <canvas id="myChart"></canvas>
+        </div>
+        <br />
+        <hr />
+        <div class="row">
+          <h2>TV Shows I Have Watched (Hours and Genre)</h2>
+          <canvas id="chartShows"></canvas>
         </div>
         <div class="clearfix"></div>
       </div>
@@ -699,36 +706,21 @@
           ],
         },
         options: {
+          indexAxis: "y",
           responsive: true,
           scales: {
-            xAxes: [
-              {
-                ticks: {
-                  maxRotation: 90,
-                  minRotation: 80,
-                },
-                gridLines: {
-                  offsetGridLines: true, // à rajouter
-                },
+            x: {
+              title: {
+                display: true,
+                text: "Months",
               },
-              {
-                position: "top",
-                ticks: {
-                  maxRotation: 90,
-                  minRotation: 80,
-                },
-                gridLines: {
-                  offsetGridLines: true, // et matcher pareil ici
-                },
+            },
+            y: {
+              title: {
+                display: true,
+                text: "Language",
               },
-            ],
-            yAxes: [
-              {
-                ticks: {
-                  beginAtZero: true,
-                },
-              },
-            ],
+            },
           },
         },
       });
@@ -781,6 +773,332 @@
           );
         });
     </script>
+
+    <script>
+      var ctx = document.getElementById("chartShows").getContext("2d");
+
+      // Define the data
+      var dramaData = [
+        {
+          x: 1,
+          y: 130,
+          name: "House",
+        },
+        {
+          x: 1,
+          y: 48,
+          name: "Money Heist",
+        },
+        {
+          x: 1,
+          y: 46,
+          name: "Breaking Bad",
+        },
+        {
+          x: 1,
+          y: 37,
+          name: "Better Call Saul",
+        },
+        {
+          x: 1,
+          y: 37,
+          name: "Designated Survivor",
+        },
+        {
+          x: 1,
+          y: 32,
+          name: "Bojack Horseman",
+        },
+        {
+          x: 1,
+          y: 30,
+          name: "Peaky Blinders",
+        },
+        {
+          x: 1,
+          y: 29,
+          name: "Narcos",
+        },
+        {
+          x: 1,
+          y: 23,
+          name: "The Punisher",
+        },
+        {
+          x: 1,
+          y: 21,
+          name: "Atypical",
+        },
+        {
+          x: 1,
+          y: 20,
+          name: "The Morning Show",
+        },
+        {
+          x: 1,
+          y: 18,
+          name: "Sherlock",
+        },
+        {
+          x: 1,
+          y: 8,
+          name: "Squid Game",
+        },
+        {
+          x: 1,
+          y: 7.5,
+          name: "Kota Factory",
+        },
+        {
+          x: 1,
+          y: 7,
+          name: "The Queen's Gambit",
+        },
+        {
+          x: 1,
+          y: 5,
+          name: "The English Game",
+        },
+        {
+          x: 1,
+          y: 5,
+          name: "Fleabag",
+        },
+        {
+          x: 1,
+          y: 4,
+          name: "The Billion Dollar Code",
+        },
+      ];
+
+      var comedyData = [
+        {
+          x: 2,
+          y: 102,
+          name: "The Big Bang Theory",
+        },
+        {
+          x: 2,
+          y: 98,
+          name: "Friends",
+        },
+        {
+          x: 2,
+          y: 76,
+          name: "How I Met Your Mother",
+        },
+        {
+          x: 2,
+          y: 72,
+          name: "The Office",
+        },
+        {
+          x: 2,
+          y: 55,
+          name: "Parks and Recreation",
+        },
+        {
+          x: 2,
+          y: 40,
+          name: "Community",
+        },
+        {
+          x: 2,
+          y: 29,
+          name: "Schitt's Creek",
+        },
+        {
+          x: 2,
+          y: 19,
+          name: "Rick and Morty",
+        },
+        {
+          x: 2,
+          y: 18,
+          name: "The Good Place",
+        },
+        {
+          x: 2,
+          y: 11,
+          name: "Ted Lasso",
+        },
+      ];
+
+      var docuData = [
+        {
+          x: 3,
+          y: 20,
+          name: "Formula 1: Drive to Survive",
+        },
+        {
+          x: 3,
+          y: 10,
+          name: "The Last Dance",
+        },
+        {
+          x: 3,
+          y: 7,
+          name: "All or Nothing: Tottenham",
+        },
+        {
+          x: 3,
+          y: 6.5,
+          name: "All or Nothing: Manchester City",
+        },
+        {
+          x: 3,
+          y: 2.5,
+          name: "Inside Bill's Brain: Decoding Bill Gates",
+        },
+      ];
+
+      var scatterDataLabels = {
+        id: "scatterDataLabels",
+        afterDatasetDraw(chart, args, options) {
+          const { ctx } = chart;
+          ctx.save();
+          for (let x = 0; x < chart.config.data.datasets.length; x++) {
+            for (
+              let i = 0;
+              i < chart.config.data.datasets[x].data.length;
+              i++
+            ) {
+              var textWidth = ctx.measureText(
+                chart.config.data.datasets[x].data[i].name
+              ).width;
+
+              if (i % 2 == 0) {
+                ctx.fillText(
+                  chart.config.data.datasets[x].data[i].name,
+                  chart.getDatasetMeta(x).data[i].x + textWidth / 5,
+                  chart.getDatasetMeta(x).data[i].y
+                );
+              } else {
+                ctx.fillText(
+                  chart.config.data.datasets[x].data[i].name,
+                  chart.getDatasetMeta(x).data[i].x - textWidth * 1.2,
+                  chart.getDatasetMeta(x).data[i].y
+                );
+              }
+            }
+          }
+        },
+      };
+
+      var options = {
+        responsive: true, // Instruct chart js to respond nicely.
+        // maintainAspectRatio: false, // Add to prevent default behaviour of full-width/height
+        plugins: {
+          tooltip: {
+            callbacks: {
+              label: function (ctx) {
+                let label = ctx.dataset.labels[ctx.dataIndex];
+                label += " (" + ctx.parsed.x + ", " + ctx.parsed.y + ")";
+                return label;
+              },
+            },
+          },
+        },
+        scales: {
+          x: {
+            beginAtZero: true,
+            suggestedMax: 4,
+            ticks: {
+              // Include a dollar sign in the ticks
+              callback: function (value, index, values) {
+                if (value == 1) {
+                  return "Drama";
+                } else if (value == 2) {
+                  return "Comedy";
+                } else if (value == 3) {
+                  return "Docu";
+                }
+                return "";
+              },
+            },
+            title: {
+              display: true,
+              text: "Genre",
+            },
+          },
+          y: {
+            title: {
+              display: true,
+              text: "Hours",
+            },
+          },
+        },
+      };
+
+      // End Defining data
+      var myChart = new Chart(ctx, {
+        type: "scatter",
+        data: {
+          datasets: [
+            {
+              label: "Drama", // Name the series
+              labels: [
+                "House",
+                "Money Heist",
+                "Breaking Bad",
+                "Better Call Saul",
+                "Designated Survivor",
+                "Bojack Horseman",
+                "Peaky Blinders",
+                "Narcos",
+                "The Punisher",
+                "Atypical",
+                "The Morning Show",
+                "Sherlock",
+                "Squid Game",
+                "Kota Factory",
+                "The Queen's Gambit",
+                "The English Game",
+                "Fleabag",
+                "The Billion Dollar Code",
+              ],
+              data: dramaData, // Specify the data values array
+              borderColor: "rgba(255,99,132,1)", // Add custom color border
+              backgroundColor: "rgba(255, 99, 132, 0.2)", // Add custom color background (Points and Fill)
+            },
+            {
+              label: "Comedy", // Name the series
+              labels: [
+                "The Big Bang Theory",
+                "Friends",
+                "How I Met Your Mother",
+                "The Office",
+                "Parks and Recreation",
+                "Community",
+                "Schitt's Creek",
+                "Rick and Morty",
+                "The Good Place",
+                "Ted Lasso",
+              ],
+              data: comedyData, // Specify the data values array
+              borderColor: "rgba(54, 162, 235, 1)", // Add custom color border
+              backgroundColor: "rgba(54, 162, 235, 0.2)", // Add custom color background (Points and Fill)
+            },
+            {
+              label: "Documentary", // Name the series
+              labels: [
+                "Formula 1: Drive to Survive",
+                "The Last Dance",
+                "All or Nothing: Tottenham Hotspurs",
+                "All or Nothing: Manchester City",
+                "Inside Bill's Brain: Decoding Bill Gates",
+              ],
+              data: docuData, // Specify the data values array
+              borderColor: "rgba(255, 206, 86, 1)", // Add custom color border
+              backgroundColor: "rgba(255, 206, 86, 0.2)", // Add custom color background (Points and Fill)
+            },
+          ],
+        },
+        options: options,
+        plugins: [scatterDataLabels],
+      });
+    </script>
+
     <script src="js/jquery.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jquery.parallax.js"></script>

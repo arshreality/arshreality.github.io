@@ -69,11 +69,6 @@ p {
   BUTTONS               
 -----------------------------------------*/
 
-canvas#myChart {
-  max-width: 768px;
-  margin: 40px auto;
-}
-
 .section-btn {
   margin: 32px 0 0 0;
   padding: 0;
