@@ -115,7 +115,7 @@ p {
   font-weight: normal;
   letter-spacing: 0.5px;
   padding: 0 25px;
-  background: #4dc47d;
+  background: #363f3a;
   border-radius: 1px;
   -webkit-transition: -webkit-transform 0.3s;
   -moz-transition: -moz-transform 0.3s;
@@ -294,7 +294,7 @@ footer {
 
 .custom-navbar {
   margin-bottom: 0;
-  background-color: #4dc47d;
+  background-color: #363f3a;
   padding: 20px 0;
 }
 
@@ -364,7 +364,7 @@ footer {
     background: 0 0;
   }
   .custom-navbar.top-nav-collapse {
-    background: #4dc47d;
+    background: #363f3a;
     padding: 15px 0;
   }
 }
