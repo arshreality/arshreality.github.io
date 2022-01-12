@@ -203,14 +203,15 @@
         <div class="row">
           <h2>The United States Travel Map</h2>
           <div>
-            <canvas id="canvas"></canvas>
+            <canvas id="usMap"></canvas>
+            <div id="legend"></div>
           </div>
         </div>
         <br />
         <hr />
         <div class="row">
           <h2>Active Months Spent Using Languages</h2>
-          <canvas id="myChart"></canvas>
+          <canvas id="langaugeGraph"></canvas>
         </div>
         <br />
         <hr />
@@ -697,7 +698,7 @@
             <div class="col-md-4 col-sm-4 item">
               <div class="projects-item">
                 <img
-                  src="images/modern-logo-new.png"
+                  src="images/modern-logo.png"
                   class="img-responsive"
                   alt=""
                 />
@@ -772,8 +773,8 @@
     <!-- SCRIPTS -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-      var ctx = document.getElementById("myChart");
-      var myChart = new Chart(ctx, {
+      var ctx = document.getElementById("langaugeGraph");
+      var langaugeGraph = new Chart(ctx, {
         type: "bar",
         data: {
           labels: ["Python", "Java", "R", "JavaScript/TypeScript", "HTML/CSS"],
@@ -799,6 +800,11 @@
           ],
         },
         options: {
+          plugins: {
+            legend: {
+              display: false,
+            },
+          },
           indexAxis: "y",
           responsive: true,
           scales: {
@@ -839,7 +845,7 @@
           ];
 
           const chart = new Chart(
-            document.getElementById("canvas").getContext("2d"),
+            document.getElementById("usMap").getContext("2d"),
             {
               type: "choropleth",
               data: {
@@ -858,6 +864,11 @@
               options: {
                 plugins: {
                   legend: {
+                    display: false,
+                  },
+                },
+                scales: {
+                  color: {
                     display: false,
                   },
                 },
