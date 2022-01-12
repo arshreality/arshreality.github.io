@@ -26,17 +26,17 @@
         function initParallax() {
           $('#home').parallax("60%", 100);
           $('#about').parallax("100%", 80);
-          $('#project').parallax("80%", 60);
-          $('#projects').parallax("40%", 40);
+          $('#education').parallax("80%", 60);
+          $('#experience').parallax("40%", 40);
           $('#contact').parallax("20%", 20);
           }
         initParallax();
 
 
         // Owl Carousel
-        var owl = $("#owl-projects");
+        var owl = $("#owl-experience");
           owl.owlCarousel({
-            autoPlay: 6000,
+            // autoPlay: 6000,
             items : 4,
             itemsDesktop : [1199,3],
             itemsDesktopSmall : [979,3],
@@ -48,7 +48,7 @@
 
         var owl2 = $("#owl-education");
           owl2.owlCarousel({
-            autoPlay: 6000,
+            // autoPlay: 6000,
             items : 4,
             itemsDesktop : [1199,3],
             itemsDesktopSmall : [979,3],

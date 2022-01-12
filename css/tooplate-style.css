@@ -220,7 +220,7 @@ a:focus {
 }
 
 #about,
-#projects,
+#experience,
 #education,
 #graphs,
 footer {
@@ -228,7 +228,7 @@ footer {
 }
 
 #about,
-#projects,
+#experience,
 #education,
 #graphs {
   padding-top: 100px;
@@ -496,15 +496,15 @@ footer {
    PROJECTS             
 -----------------------------------------*/
 
-#projects .item {
+#experience .item {
   display: block;
   width: 100%;
   margin-bottom: 22px;
 }
 
-#projects h3,
-#projects h2,
-#projects p {
+#experience h3,
+#experience h2,
+#experience p {
   margin: 0;
 }
 
